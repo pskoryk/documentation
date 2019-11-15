@@ -1,0 +1,517 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Send campaign · Gravitec.net documentation</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="POST Send Push Notification V3"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Send campaign · Gravitec.net documentation"/><meta property="og:type" content="website"/><meta property="og:url" content="https://documentation.gravitec.net/"/><meta property="og:description" content="POST Send Push Notification V3"/><meta property="og:image" content="https://documentation.gravitec.net/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://documentation.gravitec.net/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.ico" alt="Gravitec.net documentation"/><h2 class="headerTitleWithLogo">Gravitec.net documentation</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/about_rest" target="_self">REST API</a></li><li class=""><a href="/docs/install_sdk" target="_self">JavaScript API</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>REST API</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">REST API</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/about_rest">About the REST API</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/send_campaign">Send campaign</a></li><li class="navListItem"><a class="navItem" href="/docs/update_scheduled_date">Update campaign date</a></li><li class="navListItem"><a class="navItem" href="/docs/delete_campaign">Delete scheduled campaign</a></li><li class="navListItem"><a class="navItem" href="/docs/get_campaign_stats">Get push campaign statictics</a></li><li class="navListItem"><a class="navItem" href="/docs/add_tag">Add tag</a></li><li class="navListItem"><a class="navItem" href="/docs/delete_tags">Delete all tags</a></li><li class="navListItem"><a class="navItem" href="/docs/delete_tag">Delete tag</a></li><li class="navListItem"><a class="navItem" href="/docs/set_alias">Set alias</a></li><li class="navListItem"><a class="navItem" href="/docs/get_subscriber_alias">Get subscriber&#x27;s alias</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Send campaign</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="post-send-push-notification-v3"></a><a href="#post-send-push-notification-v3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>POST Send Push Notification V3</h1>
+<p><strong>Definition</strong>  <br>
+Method: POST<br>
+Endpoint:<a href="https://uapi.gravitec.net/api/v3/push+">https://uapi.gravitec.net/api/v3/push</a>  <br>
+Headers: Content-Type: application/json</p>
+<p><strong>Request body properties</strong></p>
+<pre><code class="hljs css language-{">  <span class="hljs-string">"send\_date"</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-string">"ttl"</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-string">"push\_tag"</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-string">"display\_time"</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-string">"is\_transactional"</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-string">"ignore\_duplicate"</span>: <span class="hljs-string">" "</span>,
+  <span class="hljs-string">"segments"</span>: <span class="hljs-string">\[</span>
+    <span class="hljs-string">""</span>
+  <span class="hljs-string">\],</span>
+  <span class="hljs-string">"payload"</span>: {
+    <span class="hljs-string">"message"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-string">"title"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-string">"icon"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-string">"image"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-string">"redirect\_url"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-string">"buttons"</span>: <span class="hljs-string">\[</span>
+      {
+        <span class="hljs-string">"title"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-string">"url"</span>: <span class="hljs-string">""</span>
+      }
+    <span class="hljs-string">\]</span>
+  },
+  <span class="hljs-string">"audience"</span>: {
+    <span class="hljs-string">"tokens"</span>: <span class="hljs-string">\[</span>
+      <span class="hljs-string">""</span>
+    <span class="hljs-string">\],</span>
+    <span class="hljs-string">"aliases"</span>: <span class="hljs-string">\[</span>
+      <span class="hljs-string">""</span>
+    <span class="hljs-string">\],</span>
+    <span class="hljs-string">"tags"</span>: <span class="hljs-string">\[</span>
+      <span class="hljs-string">""</span>
+    <span class="hljs-string">\],</span>
+    <span class="hljs-string">"tags\_segment"</span>: <span class="hljs-string">\[</span>
+      {
+        <span class="hljs-string">"association"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-string">"name"</span>: <span class="hljs-string">""</span>
+      }
+    <span class="hljs-string">\]</span>
+  }
+}
+</code></pre>
+<h1><a class="anchor" aria-hidden="true" id="properties"></a><a href="#properties" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Properties</strong></h1>
+<p><strong>Name</strong></p>
+<p><strong>Type</strong></p>
+<p><strong>Description</strong></p>
+<p><strong>send_date</strong>  <br>
+<strong>Optional</strong>  <br>
+default: &quot;&quot;</p>
+<p>String or Int</p>
+<p>Schedule a campaign or send it immediately.</p>
+<p>In order to schedule a campaign the desired date and time may be set, which have to be in the future.</p>
+<p>For immediate sending set it to &quot;now&quot; or &quot;&quot;.</p>
+<p>NOTE 1</p>
+<p>Time must be in<a href="https://en.wikipedia.org/wiki/Unix_time">UNIX_TIME</a>format, which is essentially<br>
+the number of seconds that have elapsed since 00:00:00 Coordinated Universal Time (UTC), Thursday, 1 January 1970, minus the number of leap seconds that have taken place since then</p>
+<p>Example</p>
+<p>&quot;send_date&quot;: &quot;&quot; - immediate sending<br>
+&quot;send_date&quot;: 1509058800 – send push at 2017.Oct.26 23:00:00</p>
+<p><strong>ttl</strong>  <br>
+<strong>Optional</strong>  <br>
+default: 28800</p>
+<p>Int</p>
+<p>The maximum period of time for which Gravitec tries to deliver all the messages from a campaign</p>
+<p>NOTE 1</p>
+<p>The number must be in between 0 and 2 419 200</p>
+<p>NOTE 2</p>
+<p>Keep in mind that a TTL value of 0 means messages that can't be delivered immediately to users are discarded. However, because such messages are never stored, this provides the best latency for sending notification messages</p>
+<p>Example</p>
+<p>&quot;ttl &quot;: 28800 - time-to-live is set to 8 hours</p>
+<p><strong>push_tag</strong></p>
+<p><strong>Optional</strong></p>
+<p>String</p>
+<p>Tags push campaign so that a comparative analysis among such tags may be available.</p>
+<p>NOTE 2</p>
+<p>A tag's length must be between 1 and 100 characters</p>
+<p>Example</p>
+<p>&quot;push_tag&quot;: &quot;news&quot; - tags a campaign with &quot;news&quot; tag</p>
+<p><strong>is_transactional</strong>  <br>
+<strong>Optional</strong>  <br>
+default: false</p>
+<p>boolean</p>
+<p>Marks a push message as Transactional, thus the message will not be displayed in the main campaign history section of the web application (<a href="https://push.gravitec.net/">{+}</a><a href="https://push.gravitec.net+/">https://push.gravitec.net+</a>).</p>
+<p>Use this if you send a great deal of small messages, which are by itself contains transactional data like personal notifications for your users, reminders, etc.</p>
+<p>NOTE 1</p>
+<p>If omitted, &quot;false&quot; value will be set for a push message</p>
+<p><strong>ignore_duplicate</strong></p>
+<p><strong>Optional</strong></p>
+<p>default: false</p>
+<p>boolean</p>
+<p><strong>true</strong>: the system shall compare provided via the REST call push campaign data with all campaigns within a 24h inteval. If the system found a dublicate push campaing, It will return an error code and campaign won't be send</p>
+<p><strong>false</strong>: the system shall not run a search for dublicate push campaigns</p>
+<p><strong>segments</strong></p>
+<p>****Optional****</p>
+<p>Array</p>
+<p>Send push campaign to a segment.</p>
+<p>NOTE 1</p>
+<p>You can not include both the <strong>segments</strong> and the **audience **section in request.</p>
+<p>NOTE 2</p>
+<p>You can only send to one segment. In case more than one segment included the system will not send the campaign</p>
+<p>NOTE 3</p>
+<p>If segment has been deleted or does not exists the system will not send the campaign</p>
+<p><strong>payload</strong>  <br>
+<strong>Required</strong></p>
+<p>The &quot;Payload&quot; section is required, whereas some arguments within the section are not required.</p>
+<p><strong>message</strong>  <br>
+<strong>Required</strong></p>
+<p>String</p>
+<p>Text, which will be displayed as push message text.</p>
+<p><img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddav5d0e18734916ff7c3c141fb75045630b.png?api=v2" alt=""></p>
+<p>NOTE 1</p>
+<p>Maximum length of the message is 1000 symbols.</p>
+<p>Example</p>
+<p>&quot;push_tag&quot;: &quot;news&quot; - tags a campaign with &quot;news&quot; tag</p>
+<p><strong>title</strong>  <br>
+<strong>Optional</strong>  <br>
+default: Title</p>
+<p>String</p>
+<p>Title or header of the message</p>
+<p>Chrome</p>
+<p><img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddav8374359591c49466af11bec9b0f51c72.png?api=v2" alt=""></p>
+<p>Firefox</p>
+<p><img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddavb275c6a4cbf721e3cebf41edbb1d52fd.png?api=v2" alt=""></p>
+<p>NOTE 1</p>
+<p>Max length of title is 1000 symbols</p>
+<p>Example</p>
+<p>&quot;header &quot;: &quot;Just another header&quot;</p>
+<p><strong>icon</strong>  <br>
+<strong>Required</strong></p>
+<p>String</p>
+<p>Notification's icon URL. Sets the notification icon to specified image URL.</p>
+<p>Image must be at least 80x80 pixels and with 1:1 ratio. Pictures without that ratio will be resized with its aspect ratio and put on a white square.</p>
+<p>1:1 aspect ratio and more than 80x80 on X and Y sides:<br>
+<img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddava8248fe5db4fe2afa1a097a37b3194a3.png?api=v2" alt=""></p>
+<p>1:1.2 aspect ratio and more than 80 on Y side:<br>
+<img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddav6e443360ed38032f21ed4814a4694678.png?api=v2" alt=""></p>
+<p>1.2:1 aspect ratio and more than 80 on X side:<br>
+<img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddavc86a6fd259462a272b39770f1fb363c5.png?api=v2" alt=""></p>
+<p>Less than 80x80 on X and Y sides:<br>
+<img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddavd333c7758c861f357888eb5467af9b20.png?api=v2" alt=""></p>
+<p>NOTE 1</p>
+<p>Provide correct URL, without spaces or tabs at the start and at the end of the URL and with ending .jpg, .jpeg or .png, otherwise the error will be fired</p>
+<p>NOTE 2</p>
+<p>Maximum length of the URL is 1000 symbols.</p>
+<p>NOTE 3</p>
+<p>Providing &quot;icon&quot;: &quot;&quot; will set the icon to default site icon, which can be set in the Site Settings page</p>
+<p>Example</p>
+<p>&quot;icon&quot;: &quot;<a href="https://cdn.gravitec.net/img/gravitecBig.jpg">https://cdn.gravitec.net/img/gravitecBig.jpg</a>&quot;</p>
+<p><strong>image</strong>  <br>
+<strong>Optional</strong></p>
+<p>String</p>
+<p>URL of big picture to display below the notification main body.</p>
+<p>For the best results provided image should be with 1.5:1 sides ratio and size at least 360x240 pixels.</p>
+<p>Some image processing examples</p>
+<p>1:1.2 aspect ratio and more than 240 on Y side:<br>
+<img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddavb2f088e87efc2a1b060e479a3e10ff98.png?api=v2" alt="">  <br>
+1.2:1 aspect ratio and more than 360 on X side:</p>
+<p><img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddav530ff04dd3c2211a8dc14eb9bc94f13e.png?api=v2" alt="">  <br>
+Less than 360x240 on X and Y sides:<br>
+<img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddaveee26dc017dd50bab1ea6a474ed7f718.png?api=v2" alt=""></p>
+<p>1.5:1 aspect ratio and more or equal than 360x240 on X and Y sides accordingly:</p>
+<p><img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddav41d6c973f5975da21599bd1e31a1ff9f.png?api=v2" alt=""></p>
+<p>NOTE 1</p>
+<p>Provide valid URL without spaces or tabs at the start and at the end of the URL and with ending with .jpg, .jpeg or .png, otherwise the error will be fired</p>
+<p>NOTE 2</p>
+<p>Maximum length of the URL is 1000 symbols.</p>
+<p>NOTE 3</p>
+<p>Pictures, which are not in 1.5:1 ratio or less then 360x240 and will be resized according to their aspect ratio and put on top of a white image of 360x240 px</p>
+<p><strong>redirect_url</strong>  <br>
+<strong>Required</strong></p>
+<p>String</p>
+<p>URL which will be opened in user's browser if user clicks on the notification body.</p>
+<p>NOTE 1</p>
+<p>Maximum length of the URL is 1000 symbols.</p>
+<p>NOTE 2</p>
+<p>Provide correct URL, without spaces or tabs at the start and at the end of the URL, otherwise the error will be fired.</p>
+<p>Example</p>
+<p>&quot;redirect_url&quot;: &quot;<a href="http://yoursite.com/news">http://yoursite.com/news</a>&quot;</p>
+<p><strong>buttons</strong>  <br>
+<strong>Optional</strong></p>
+<p>Specify in this array one or two action buttons, which will be displayed below the notification main body.</p>
+<p><img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddave5b7832770edb28917d49d3697f32069.png?api=v2" alt=""></p>
+<p><img src="https://gravitec.atlassian.net/wiki/download/attachments/310476801/worddav62240d691b569eb47ac95111a8ac6215.png?api=v2" alt=""></p>
+<p><strong>title</strong>  <br>
+<strong>Required</strong></p>
+<p>String</p>
+<p>A button title</p>
+<p>NOTE 1</p>
+<p>Max length of title is 48 symbols</p>
+<p><strong>url</strong>  <br>
+<strong>Required</strong></p>
+<p>String</p>
+<p>URL which will be opened in user's browser if user clicks on the button.</p>
+<p>NOTE 1</p>
+<p>Maximum length of the URL is 1000 symbols.</p>
+<p>NOTE 2</p>
+<p>Provide correct URL, without spaces or tabs at the start and at the end of the URL (rfc3986)</p>
+<p><strong>audience</strong>  <br>
+<strong>Optional</strong></p>
+<p>The &quot;Audience&quot; section is optional.</p>
+<p>NOTE 1</p>
+<p>If omitted, the system shall send push message to all subscribers.</p>
+<p>NOTE 2</p>
+<p>If set - the section must contain only one of these variables (in other case, error will be fired):</p>
+<p><strong>tokens</strong>  <br>
+<strong>Optional</strong></p>
+<p>Array</p>
+<p>A list of subscribers' IDs in this parameter means that the campaign will be send exactly to the list of subscribers specified.</p>
+<p>You can get subscriber's ID by usinggetSubscriptionfunction from ourWeb SDK API</p>
+<p>NOTE 1</p>
+<p>Array size is limited to 100 IDs</p>
+<p>Example</p>
+<p>&quot;tokens&quot;: [&quot;dec301908b9ba...8df85e57a58e40f96f&quot;, &quot;523f4c2068674f1fe...2ba25cdc250a2a41&quot;]</p>
+<p><strong>aliases</strong>  <br>
+<strong>Optional</strong></p>
+<p>Array</p>
+<p>A list of aliases means that the campaign will be sent exactly to the list of subscribers who are associated with aliases provided in the list.</p>
+<p>You can set an alias by using setAlias function from ourWeb SDK API</p>
+<p>Example</p>
+<p>&quot;aliases&quot;: [&quot;own_id_device_1&quot;, &quot;own_id_device_2&quot;, &quot;own_id_device_3&quot;]</p>
+<p><strong>tags</strong>  <br>
+<strong>Optional</strong></p>
+<p>Array</p>
+<p>A list of tags means that message will be send exactly to the list of subscribers who were tagged with tags provided in the list.</p>
+<p>You can tag your subscribers by using addTag or setTags function from ourWeb SDK API</p>
+<p>Example</p>
+<p>&quot;tags&quot;: [&quot;tag1&quot;, &quot;tag2&quot;, &quot;tag3&quot;]</p>
+<p><strong>tags_segment</strong></p>
+<p><strong>Optional</strong></p>
+<p>Array</p>
+<p>Target subscribers by filtering them with tags conditions</p>
+<p>You can tag your subscribers by using addTag or setTags function from ourWeb SDK API</p>
+<p>In order to send campaign to a part of your audience that is an intersection of two or more segments of tagged subscribers you can provide such a condition by using logic operators AND, AND_NOT, OR, OR_NOT followed by a tag. Such conditions should be put in array of json elements.<br>
+AND – include all followers tagged by the tag followed with AND logical operator<br>
+AND_NOT - include all followers who hasn't been tagged by the tag followed with AND logical operator<br>
+OR - include all followers tagged by the tag followed with OR logical operator<br>
+OR_NOT - include all followers who hasn't been tagged by the tag followed with OR logical operator</p>
+<p>NOTE 1</p>
+<p><strong>Tags</strong>array must contain not less that 1 and not more than 256 elements</p>
+<p>NOTE 1</p>
+<p>Tag name must contain not less that 1 and not more than 255 symbols</p>
+<p>NOTE 1</p>
+<p>You must provide logical operator only from the list: AND, AND_NOT, OR, OR_NOT</p>
+<p>NOTE 1</p>
+<p>Tag name provided must be case-insensitive unique among the elements in the array (Example: CARS and cars are not unique)</p>
+<p>NOTE 1</p>
+<p>It is not allowed to use both tags_segment and tags directive simultaneously</p>
+<p>NOTE 1</p>
+<p>You must provide tags that exists in the system</p>
+<p>Example</p>
+<p>&quot;tags_segment&quot;: [<br>
+{<br>
+&quot;association&quot;: &quot;AND&quot;,<br>
+&quot;name&quot;: &quot;tag1&quot;<br>
+} ,<br>
+{<br>
+&quot;association&quot;: &quot;AND_NOT&quot;,<br>
+&quot;name&quot;: &quot;tag2&quot;<br>
+}<br>
+]<br>
+The system shall send the campaign to all followers with tag tag1 and without tag2</p>
+<p>Example</p>
+<p>&quot;tags_segment&quot;: [<br>
+{<br>
+&quot;association&quot;: &quot;AND_NOT&quot;,<br>
+&quot;name&quot;: &quot;tag1&quot;<br>
+} ,<br>
+{<br>
+&quot;association&quot;: &quot;OR&quot;,<br>
+&quot;name&quot;: &quot;tag2&quot;<br>
+}<br>
+]<br>
+The system shall send the campaign to all followers without tag<strong>tag1</strong>or with<strong>tag2</strong></p>
+<p><strong>Responses (Results and Errors)</strong>  <br>
+<strong>200 OK - Standard response for successful HTTP requests</strong></p>
+<p>Request</p>
+<p>Response</p>
+<p>{<br>
+&quot;payload&quot;: {<br>
+&quot;message&quot;: &quot; Test massage&quot;,<br>
+&quot;title&quot;: &quot;Test message&quot;,<br>
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;<br>
+}<br>
+}</p>
+<p>{
+&quot;id&quot;: &quot;1590394828308348928&quot;,
+&quot;send_date&quot;: &quot;1516718700678&quot;,
+&quot;ttl&quot;: &quot;86400&quot;,
+&quot;display_time&quot;: &quot;60&quot;,
+&quot;payload&quot;: {
+&quot;title&quot;: &quot;Test message&quot;
+}
+}</p>
+<p><strong>403 FORBIDDEN - authorization failed</strong></p>
+<p>Request</p>
+<p>Response</p>
+<p>POST /api/v3/push HTTP/1.1<br>
+Host: <a href="http://api.gravitec.net">api.gravitec.net</a>  <br>
+Content-Type: application/json<br>
+Authorization: Basic Z2hqZ2hqZ2g6aGdtamdoag==<br>
+Cache-Control: no-cache<br>
+{<br>
+&quot;payload&quot;: {<br>
+&quot;message&quot;: &quot;Test massage&quot;,<br>
+&quot;title&quot;: &quot;Test message&quot;,<br>
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;<br>
+}<br>
+}</p>
+<p>{<br>
+&quot;status&quot;: &quot;incomplete by bad auth&quot;,<br>
+&quot;error_message&quot;: &quot;There is no web site with appKey: 5459059059405940gpgkj&quot;<br>
+}</p>
+<p><strong>404 NOT FOUND - missed required parameter</strong></p>
+<p>Request</p>
+<p>Response</p>
+<p><strong>412 PRECONDITION_FAILED - bad message</strong></p>
+<p>Request</p>
+<p>Response</p>
+<p><strong>417 EXPECTATION_FAILED - wrong parameter</strong></p>
+<p>Request</p>
+<p>Response</p>
+<p><strong>424 FAILED_DEPENDENCY - bad audience</strong></p>
+<p>Request</p>
+<p>Response</p>
+<p><strong>422 UNPROCESSABLE_ENTITY</strong></p>
+<p>Request</p>
+<p>Response</p>
+<p>{
+&quot;payload&quot;: {
+&quot;title&quot;: &quot;Title&quot;,
+&quot;message&quot;: &quot;Simple integration test&quot;,
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;
+},
+&quot;audience&quot;: {
+&quot;tags_segment&quot;: [ ]
+}
+}</p>
+<p>{
+&quot;httpStatus&quot; : &quot;UNPROCESSABLE_ENTITY&quot;,
+&quot;error&quot; : &quot;Invalid parameters!&quot;,
+&quot;errorDescription&quot; : &quot;Field 'audience.tagsSegment': The size of the tags array should be between 1 and 256!&quot;
+}</p>
+<p>{
+&quot;payload&quot;: {
+&quot;title&quot;: &quot;Title&quot;,
+&quot;message&quot;: &quot;Simple integration test&quot;,
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;
+},
+&quot;audience&quot;: {
+&quot;tags_segment&quot;: [
+{
+&quot;name&quot;: &quot;&quot;,
+&quot;association&quot;: &quot;AND&quot;
+}
+]
+}
+}</p>
+<p>{
+&quot;httpStatus&quot; : &quot;UNPROCESSABLE_ENTITY&quot;,
+&quot;error&quot; : &quot;Invalid parameters!&quot;,
+&quot;errorDescription&quot; : &quot;Field 'audience.tagsSegment[0].name': Tag name should be not blank!&quot;
+}</p>
+<p>{
+&quot;payload&quot;: {
+&quot;title&quot;: &quot;Title&quot;,
+&quot;message&quot;: &quot;Simple integration test&quot;,
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;
+},
+&quot;audience&quot;: {
+&quot;tags_segment&quot;: [
+{
+&quot;name&quot;: &quot;tag1&quot;,
+&quot;association&quot;: &quot;XOR_NOT&quot;
+}
+]
+}
+}</p>
+<p>{
+&quot;httpStatus&quot; : &quot;UNPROCESSABLE_ENTITY&quot;,
+&quot;error&quot; : &quot;Incomplete by wrong param(s)!&quot;,
+&quot;errorDescription&quot; : &quot;Cannot deserialize value of type `net.gravitec.core.db.pojo.enums.AssociationType` ...&quot;
+}</p>
+<p>{
+&quot;payload&quot;: {
+&quot;title&quot;: &quot;Title&quot;,
+&quot;message&quot;: &quot;Simple integration test&quot;,
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;
+},
+&quot;audience&quot;: {
+&quot;tags_segment&quot;: [
+{
+&quot;name&quot;: &quot;cars&quot;,
+&quot;association&quot;: &quot;AND&quot;
+},
+{
+&quot;name&quot;: &quot;CARS&quot;,
+&quot;association&quot;: &quot;OR&quot;
+}
+]
+}
+}</p>
+<p>{
+&quot;httpStatus&quot; : &quot;UNPROCESSABLE_ENTITY&quot;,
+&quot;error&quot; : &quot;Incomplete by wrong param(s)!&quot;,
+&quot;errorDescription&quot; : &quot;Duplicate tags found! Details: 'cars', be careful as tag names are case-insensitive!&quot;
+}</p>
+<p>{
+&quot;payload&quot;: {
+&quot;title&quot;: &quot;Title&quot;,
+&quot;message&quot;: &quot;Simple integration test&quot;,
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;
+},
+&quot;audience&quot;: {
+&quot;tags&quot;: [&quot;tagA&quot;],
+&quot;tags_segment&quot;: [
+{
+&quot;name&quot;: &quot;tagB&quot;,
+&quot;association&quot;: &quot;AND&quot;
+}
+]
+}
+}</p>
+<p>{
+&quot;httpStatus&quot; : &quot;UNPROCESSABLE_ENTITY&quot;,
+&quot;error&quot; : &quot;Incomplete by wrong param(s)!&quot;,
+&quot;errorDescription&quot; : &quot;Parameters 'tags' and 'tags_segment' cannot be used together! Please use only one.&quot;
+}</p>
+<p>{
+&quot;payload&quot;: {
+&quot;title&quot;: &quot;Title&quot;,
+&quot;message&quot;: &quot;Simple integration test&quot;,
+&quot;redirect_url&quot;: &quot;<a href="https://gravitec.net">https://gravitec.net</a>&quot;
+},
+&quot;audience&quot;: {
+&quot;tags_segment&quot;: [
+{
+&quot;name&quot;: &quot;Sport&quot;,
+&quot;association&quot;: &quot;OR&quot;
+},
+{
+&quot;name&quot;: &quot;cars&quot;,
+&quot;association&quot;: &quot;AND_NOT&quot;
+},
+{
+&quot;name&quot;: &quot;news&quot;,
+&quot;association&quot;: &quot;AND&quot;
+}
+]
+}
+}</p>
+<p>{
+&quot;httpStatus&quot; : &quot;UNPROCESSABLE_ENTITY&quot;,
+&quot;error&quot; : &quot;Incomplete by wrong param(s)!&quot;,
+&quot;errorDescription&quot; : &quot;Tags mismatch! There is no such tag(s) in your site: sport, cars, news!&quot;
+}</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/about_rest"><span class="arrow-prev">← </span><span>About the REST API</span></a><a class="docs-next button" href="/docs/update_scheduled_date"><span>Update campaign date</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/favicon.ico" alt="Gravitec.net documentation" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/en/doc1.html">Getting Started (or other categories)</a><a href="/docs/en/doc2.html">Guides (or other categories)</a><a href="/docs/en/doc3.html">API Reference (or other categories)</a></div><div><h5>Community</h5><a href="/en/users.html">User Showcase</a><a href="https://stackoverflow.com/questions/tagged/" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://discordapp.com/">Project Chat</a><a href="https://twitter.com/" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="/blog">Blog</a><a href="https://github.com/">GitHub</a><a class="github-button" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><a href="https://opensource.facebook.com/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2019 Gravitec.net</section></footer></div></body></html>
